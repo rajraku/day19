@@ -134,22 +134,22 @@ class Onsen
 
 
     validDesigns(): void {
-        const possiblePatterns = new Map<string, boolean>();
-        const impossiblePatterns = new Map<string, boolean>();
+        const possiblePatterns: string[] = [];
+        const impossiblePatterns: string[] = [];
 
         this.parsedValues.requiredPatterns.forEach( pt =>{
             if (this.validDesign(pt))
             {
-                possiblePatterns.set(pt, true);
+                possiblePatterns.push(pt);
             }
             else
             {
-                impossiblePatterns.set(pt, true);
+                impossiblePatterns.push(pt);
             }
         });
 
-        console.log("Possible Patterns: " + possiblePatterns.size);
-        console.log("Impossible Patterns: " + impossiblePatterns.size);
+        console.log("Possible Patterns: " + possiblePatterns.length);
+        console.log("Impossible Patterns: " + impossiblePatterns.length);
 
         console.log(impossiblePatterns);
     }
@@ -169,4 +169,5 @@ class Onsen
 const parsedValues = new FileParser("./data/prob1-sample.txt");
 const values = new Onsen(parsedValues);
 
+values.validDesigns();
 values.possibleDesigns();
