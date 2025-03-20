@@ -1,5 +1,19 @@
 import { readFileSync  } from 'fs';
 
+function eval_time() {    
+    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+        const method = descriptor.value!;
+        
+        descriptor.value = function() {
+            const startTime = Date.now()
+            const result = method.apply(this,arguments);
+            console.log(`Took (${(Date.now() - startTime)}) ms`);
+            return result;
+        }
+    };
+}
+   
+
 class FileParser
 {
     private _requiredPatterns: string[];
@@ -133,6 +147,7 @@ class Onsen
     }
 
 
+    @eval_time()
     validDesigns(): void {
         const possiblePatterns: string[] = [];
         const impossiblePatterns: string[] = [];
@@ -155,6 +170,7 @@ class Onsen
     }
 
 
+    @eval_time()
     possibleDesigns(): void {
         let designCount = 0;
 
